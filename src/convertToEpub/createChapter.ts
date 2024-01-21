@@ -11,17 +11,15 @@ const converterOptions: Showdown.ConverterOptions = {
   ghMentions: true,
   emoji: true,
   underline: true,
+  appendChapterTitles: true,
 };
 const mdConverter = new Showdown.Converter(converterOptions);
 export async function createChapter(filePath: string) {
   console.log("Processing markdown files...");
-  const markdown = await processMarkdownFile(filePath);
+  const [markdown, title] = await processMarkdownFile(filePath);
   const fileName = filePath.split("/").slice(-2, -1).pop();
   const chapter: Epub.Chapter = {
-    title: fileName
-      ?.split("-")
-      .map((str) => str[0].toUpperCase() + str.slice(1))
-      .join(" "),
+    title,
     filename: fileName,
     data: mdConverter.makeHtml(markdown),
   };

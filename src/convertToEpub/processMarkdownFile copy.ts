@@ -1,10 +1,13 @@
 import path from "path";
 import fs from "fs";
+
+const localUrlRegex = /\]\((?!http).*?\)/g;
+
 export async function processMarkdownFile(filePath: string) {
   const markdown = await fs.promises.readFile(filePath, "utf8");
   console.log("Adjusting image urls...");
   const urls =
-    markdown.match(/\]\((?!http).*?\)/g)?.map((url) => url.slice(2, -1)) || [];
+    markdown.match(localUrlRegex)?.map((url) => url.slice(2, -1)) || [];
   const processed = urls.reduce((acc, url) => {
     if (url.includes("images/") || url.includes("assets/")) {
       const folderPathArray = filePath.split("/");
