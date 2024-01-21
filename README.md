@@ -12,9 +12,10 @@ Running the  code does the following:
 ### Instructions
 - Run the command `yarn` to install the required dependencies
 - Run the command `yarn start` to start the EPUB generation
-(Or if you're using npm, launch `npm install` and `npm start`)
 
-The .epub file will be generated under the `dist` directory
+**(Or if you're using npm, launch `npm install` and `npm start`)**
+
+The .epub file will be generated under the `dist` directory.
 
 ### Involved libraries
 Repository download:
