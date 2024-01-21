@@ -1,7 +1,7 @@
 {
-  "name": "scripts",
+  "name": "javascript-algorithms-epub",
   "version": "0.0.1",
-  "main": "index.js",
+  "main": "index.ts",
   "author": "saantonandre",
   "license": "MIT",
   "type": "module",

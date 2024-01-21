@@ -1,13 +1,35 @@
 import Showdown from "showdown";
 import Epub from "epub-gen";
 import path from "path";
-import { promises as fs } from "fs";
+import { existsSync, promises as fs } from "fs";
 import { REPO_PATH } from "initialize";
 import { listFiles } from "listFiles";
 export const mdConverter = new Showdown.Converter({ tables: true });
 const title = "JavaScript Algorithms and Data Structures";
-export const OUTPUT_PATH = path.join(__dirname, "./dist/" + title + ".epub");
+export const OUTPUT_PATH = path.join(__dirname, "./dist");
 
+export async function convertToEpub() {
+  const chapters: Epub.Chapter[] = await Promise.all(
+    listFiles(REPO_PATH)
+      .filter((file) => file.split("/").pop() === "README.md")
+      .map(createChapter)
+  );
+  const options: Epub.Options = {
+    version: 3,
+    title,
+    author: "trekhleb",
+    cover: path.resolve(__dirname, "./src/assets/cover.png"),
+    content: chapters,
+    lang: "en",
+  };
+  console.log("Generating EPUB...");
+  if (!existsSync(OUTPUT_PATH)) {
+    await fs.mkdir(OUTPUT_PATH);
+  }
+  await fs.mkdir(OUTPUT_PATH);
+  const epub = new Epub(options, OUTPUT_PATH + "/" + title);
+  await epub.promise;
+}
 async function processMarkdownFile(filePath: string) {
   const markdown = await fs.readFile(filePath, "utf8");
   console.log("Adjusting image urls...");
@@ -41,22 +63,4 @@ async function createChapter(filePath: string) {
     data: mdConverter.makeHtml(markdown),
   };
   return chapter;
-}
-export async function convertToEpub() {
-  const chapters: Epub.Chapter[] = await Promise.all(
-    listFiles(REPO_PATH)
-      .filter((file) => file.split("/").pop() === "README.md")
-      .map(createChapter)
-  );
-  const options: Epub.Options = {
-    version: 3,
-    title,
-    author: "trekhleb",
-    cover: path.resolve(__dirname, "./src/assets/cover.png"),
-    content: chapters,
-    lang: "en",
-  };
-  console.log("Generating EPUB...");
-  const epub = new Epub(options, OUTPUT_PATH);
-  await epub.promise;
 }
