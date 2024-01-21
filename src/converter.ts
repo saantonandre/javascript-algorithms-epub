@@ -26,10 +26,10 @@ export async function convertToEpub() {
   if (!existsSync(OUTPUT_PATH)) {
     await fs.mkdir(OUTPUT_PATH);
   }
-  await fs.mkdir(OUTPUT_PATH);
   const epub = new Epub(options, OUTPUT_PATH + "/" + title);
   await epub.promise;
 }
+
 async function processMarkdownFile(filePath: string) {
   const markdown = await fs.readFile(filePath, "utf8");
   console.log("Adjusting image urls...");
