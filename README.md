@@ -18,11 +18,13 @@ Running the  code does the following:
 The .epub file will be generated under the `dist` directory.
 
 ### Involved libraries
-Repository download:
-[git-clone](https://github.com/jaz303/git-clone)
-Markdown to HTML:
-[showdown](https://github.com/showdownjs/showdown)
-HTML to EPUB:
+Repository download:  
+[git-clone](https://github.com/jaz303/git-clone)  
+
+Markdown to HTML:  
+[showdown](https://github.com/showdownjs/showdown)  
+
+HTML to EPUB:  
 [showdown](https://github.com/cyrilis/epub-gen)
 
 ### License
