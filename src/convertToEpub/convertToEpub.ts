@@ -5,7 +5,7 @@ import { listFiles } from "utils/listFiles";
 import { createChapter } from "./createChapter";
 const title = "JavaScript Algorithms and Data Structures";
 
-export async function convertToEpub(repoPath: string, outputPath: string) {
+export async function convertToEpub(repoPath: string, outputPath: string,coverPath:string) {
   const chapters: Epub.Chapter[] = await Promise.all(
     listFiles(repoPath)
       .filter((file) => file.split("/").pop() === "README.md")
@@ -15,7 +15,7 @@ export async function convertToEpub(repoPath: string, outputPath: string) {
     version: 3,
     title,
     author: "trekhleb",
-    cover: path.resolve(__dirname, "./src/assets/cover.png"),
+    cover: coverPath,
     content: chapters,
     lang: "en",
   };
